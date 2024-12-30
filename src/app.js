@@ -8,11 +8,14 @@ app.post('/signup', async (req, res) => {
 
     const user = new User(req.body);
     try {
+        if (data.skills.length > 10) {
+            throw new Error("caan't be more than 10")
+        }
         await user.save();
         res.send("successfully saved");
     }
     catch (err) {
-        res.status(404).send("can't send")
+        res.status(404).send("can't send" + err.message)
     }
 })
 
@@ -62,10 +65,18 @@ app.patch("/user", async (req, res) => {
     const userId = req.body.userId
     const data = req.body
     try {
-        await User.findByIdAndUpdate({ _id: userId }, data)
+        const allowed = ["firstname", "lastname", "gender", "age", "skills"]
+        const isallowed = Object.keys(data).every((k) => allowed.includes(k))
+        if (!isallowed) {
+            throw new Error(" update not allowed")
+        }
+        if (data.skills.length > 10) {
+            throw new Error("can't be more than 10")
+        }
+        await User.findByIdAndUpdate({ _id: userId }, data, { runValidators: true })
         res.send("successfully updated")
     } catch (err) {
-        console.log("error")
+        res.status(404).send("error" + err.message)
     }
 })
 
