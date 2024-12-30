@@ -1,21 +1,31 @@
 const express = require('express')
 const connectDB = require('./config/database')
 const User = require('./models/user')
+const bcrypt = require('bcrypt')
 const app = express();
+const validateSignup = require('./utils/validation')
 app.use(express.json());
 
 app.post('/signup', async (req, res) => {
-
-    const user = new User(req.body);
     try {
-        if (data.skills.length > 10) {
-            throw new Error("caan't be more than 10")
-        }
+        //validation of api
+        validateSignup(req);
+        //hashing of password
+        const { firstName, lastName, email, password } = req.body;
+        const passwordhash = await bcrypt.hash(password, 10)
+        const data = req.body
+        const user = new User({
+            firstName, lastName, email, password: passwordhash
+        });
+
+        // if (data.skills.length > 10) {
+        //     throw new Error("caan't be more than 10")
+        // }
         await user.save();
         res.send("successfully saved");
     }
     catch (err) {
-        res.status(404).send("can't send" + err.message)
+        res.status(404).send("Error " + err.message)
     }
 })
 
@@ -80,6 +90,24 @@ app.patch("/user", async (req, res) => {
     }
 })
 
+//login 
+app.post("/login", async (req, res) => {
+    try {
+        const { email, password } = req.body;
+        const user = await User.findOne({ email: email })
+        if (!user) {
+            throw new Error("invalid credentials ")
+        }
+        const log = await bcrypt.compare(password, user.password)
+        if (!log) {
+            throw new Error("invalid credentials ")
+        } else {
+            res.send('succesfully logged in')
+        }
+    } catch (err) {
+        res.send("Error: " + err.message)
+    }
+})
 connectDB().then(() => {
     console.log("sucessfully connected to database!!");
     app.listen(5000, () => {
