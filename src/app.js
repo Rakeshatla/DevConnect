@@ -2,9 +2,14 @@ const express = require('express')
 const connectDB = require('./config/database')
 const User = require('./models/user')
 const bcrypt = require('bcrypt')
+var cookieParser = require('cookie-parser');
+const jwt = require('jsonwebtoken')
+const userauth = require('./middleware/auth')
+
 const app = express();
 const validateSignup = require('./utils/validation')
 app.use(express.json());
+app.use(cookieParser())
 
 app.post('/signup', async (req, res) => {
     try {
@@ -70,6 +75,16 @@ app.delete("/user", async (req, res) => {
     }
 })
 
+//to get profile
+app.get("/profile", userauth, async (req, res) => {
+    try {
+        const user = req.user;
+        res.send(user)
+    } catch (err) {
+        res.status(404).send("invalid credentials  " + err.message)
+    }
+})
+
 //to update
 app.patch("/user", async (req, res) => {
     const userId = req.body.userId
@@ -98,14 +113,27 @@ app.post("/login", async (req, res) => {
         if (!user) {
             throw new Error("invalid credentials ")
         }
-        const log = await bcrypt.compare(password, user.password)
-        if (!log) {
-            throw new Error("invalid credentials ")
-        } else {
+        const isPasswordValid = await bcrypt.compare(password, user.password)
+        if (isPasswordValid) {
+            //jwt token
+            const token = await jwt.sign({ _id: user._id }, "DEVTINDER", { expiresIn: '0d' })
+            //cookies 
+            res.cookie('token', token)
             res.send('succesfully logged in')
+        } else {
+            throw new Error("invalid credentials ")
         }
     } catch (err) {
         res.send("Error: " + err.message)
+    }
+})
+
+app.post('/sendconnection', userauth, (req, res) => {
+    try {
+        const user = req.user
+        res.send(user.firstName + ' sent connection')
+    } catch (err) {
+        res.status(404).send("can't send connection")
     }
 })
 connectDB().then(() => {
