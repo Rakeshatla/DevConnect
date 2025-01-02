@@ -5,6 +5,7 @@ const jwt = require('jsonwebtoken')
 const User = require('../models/user')
 const { profileUpdate } = require('../utils/validation')
 const validator = require('validator')
+const bcrypt = require('bcrypt')
 
 profileRouter.get("/profile/view", userauth, async (req, res) => {
     try {
@@ -39,7 +40,8 @@ profileRouter.patch("/profile/edit/password", userauth, async (req, res) => {
         if (validator.isStrongPassword(password)) {
             const loggedInUser = req.user;
             // console.log(loggedInUser)
-            loggedInUser.password = password
+            const passwordhash = await bcrypt.hash(password, 10)
+            loggedInUser.password = passwordhash
             await loggedInUser.save();
             res.send("updated successfully!!")
         } else {

@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const validator = require('validator')
+//indexing on mongodb
 const userSchema = mongoose.Schema({
     firstName: {
         type: String,
