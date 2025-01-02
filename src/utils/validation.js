@@ -10,4 +10,11 @@ const validateSignup = (req) => {
     }
 }
 
-module.exports = validateSignup;
+const profileUpdate = (req) => {
+    const allowedfields = ["firstName", "lastName", "password", "skills", "age", "gender"];
+    const isallowed = Object.keys(req.body).every((field) =>
+        allowedfields.includes(field)
+    );
+    return isallowed;
+}
+module.exports = { validateSignup, profileUpdate };
