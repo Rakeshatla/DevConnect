@@ -1,6 +1,6 @@
 const express = require('express')
 const authRouter = express.Router();
-const validateSignup = require('../utils/validation')
+const { validateSignup } = require('../utils/validation')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
 const User = require('../models/user')

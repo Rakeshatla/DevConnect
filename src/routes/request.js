@@ -45,4 +45,38 @@ requestRouter.post('/request/send/:status/:toUserId', userauth, async (req, res)
     }
 })
 
+requestRouter.post('/request/review/:status/:requestId', userauth, async (req, res) => {
+    try {
+        const { status, requestId } = req.params;
+        // console.log(status)
+        // console.log(requestId)
+        const loggedIn = req.user
+        // console.log(loggedIn)
+        const allowedstatus = ["accepted", "rejected"]
+        if (!allowedstatus.includes(status)) {
+            throw new Error("status is invalid")
+        }
+        const connectionReq = await ConnectionRequest.findOne({
+            _id: requestId, toUserId: loggedIn._id, status: "interested",
+        })
+        //if the connection is already accepted
+        const isAlreadyAccepted = await ConnectionRequest.findOne({
+            _id: requestId, toUserId: loggedIn._id, status: "accepted",
+        })
+        if (isAlreadyAccepted) {
+            throw new Error("connection already accepted")
+        }
+        // console.log(connectionReq)
+        if (!connectionReq) {
+            throw new Error("no connection is present")
+        }
+        connectionReq.status = status
+        await connectionReq.save()
+        res.send("connection accepted successfully")
+    } catch (err) {
+        res.status(404).send("Error " + err.message)
+    }
+})
+
+
 module.exports = requestRouter;
