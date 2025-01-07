@@ -4,7 +4,7 @@ const userauth = require('../middleware/auth');
 const ConnectionRequest = require('../models/ConnectionRequest');
 const User = require('../models/user');
 
-const DATA = ['firstName', 'lastName', 'age', 'gender']
+const DATA = ['firstName', 'lastName', 'age', 'gender', 'photoUrl']
 
 userRouter.get('/user/requests', userauth, async (req, res) => {
     try {
@@ -25,7 +25,7 @@ userRouter.get('/user/requests', userauth, async (req, res) => {
 
 userRouter.get('/user/connections', userauth, async (req, res) => {
     try {
-        const DATA = ['firstName', 'age', 'gender']
+        const DATA = ['firstName', 'age', 'gender', 'photoUrl', 'about']
         const loggedIn = req.user
         const connections = await ConnectionRequest.find({
             $or: [{

@@ -12,7 +12,7 @@ profileRouter.get("/profile/view", userauth, async (req, res) => {
         const user = req.user;
         res.send(user)
     } catch (err) {
-        res.status(404).send("invalid credentials  " + err.message)
+        res.status(401).send("invalid credentials  " + err.message)
     }
 })
 
@@ -21,13 +21,16 @@ profileRouter.patch("/profile/edit", userauth, async (req, res) => {
         if (!profileUpdate(req)) {
             throw new Error("can't update")
         }
-        const loggedUser = req.user;
+        const loggedInUser = req.user;
         // console.log(loggedUser)
         Object.keys(req.body).forEach((key) => (
-            loggedUser[key] = req.body[key]
+            loggedInUser[key] = req.body[key]
         ))
-        await loggedUser.save()
-        res.send(loggedUser.firstName + 'update successful')
+        await loggedInUser.save()
+        res.json({
+            message: `${loggedInUser.firstName}, your profile updated successfuly`,
+            data: loggedInUser,
+        });
     } catch (err) {
         res.status(404).send("sorry " + err.message)
     }

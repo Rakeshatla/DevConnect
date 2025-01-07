@@ -36,6 +36,15 @@ const userSchema = mongoose.Schema({
         type: Number,
         min: 18
     },
+    about: {
+        type: String,
+        default: "Rappa Rappa"
+    }
+    ,
+    photoUrl: {
+        type: String,
+        default: "https://photos.google.com/search/_cAF1QipMhsrnJwPrRLX1dEtTcHfcAjfBun4YayA_Rakesh%20Atla/photo/AF1QipMzcI-CUG8vC2TwPDU0y8kmHPj4-PZXjop40XU"
+    },
     gender: {
         type: String,
         validate(value) {
