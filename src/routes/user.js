@@ -13,11 +13,12 @@ userRouter.get('/user/requests', userauth, async (req, res) => {
             toUserId: loggedIn._id, status: "interested"
         }).populate('formUserId', ['firstName', "age"])
 
-        if (connections.length === 0) {
-            throw new Error("No requests")
+        if (!connections) {
+            res.send("No requests")
         }
         const data = await connections.map((row) => row.formUserId)
         res.json({ message: "requests are", data })
+
     } catch (err) {
         res.status(404).send("Error " + err.message)
     }
