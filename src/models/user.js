@@ -43,7 +43,7 @@ const userSchema = mongoose.Schema({
     ,
     photoUrl: {
         type: String,
-        default: "https://photos.google.com/search/_cAF1QipMhsrnJwPrRLX1dEtTcHfcAjfBun4YayA_Rakesh%20Atla/photo/AF1QipMzcI-CUG8vC2TwPDU0y8kmHPj4-PZXjop40XU"
+        default: "https://cdn-icons-png.flaticon.com/512/3846/3846972.png"
     },
     gender: {
         type: String,

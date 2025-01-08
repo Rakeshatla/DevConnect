@@ -19,8 +19,11 @@ authRouter.post('/signup', async (req, res) => {
         // if (data.skills.length > 10) {
         //     throw new Error("caan't be more than 10")
         // }
-        await user.save();
-        res.send("successfully saved");
+        const saved = await user.save();
+        const token = await jwt.sign({ _id: user._id }, "DEVTINDER", { expiresIn: '1d' })
+        //cookies 
+        res.cookie('token', token)
+        res.send(saved);
     }
     catch (err) {
         res.status(404).send("Error " + err.message)

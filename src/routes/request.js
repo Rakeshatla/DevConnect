@@ -70,6 +70,7 @@ requestRouter.post('/request/review/:status/:requestId', userauth, async (req, r
         if (!connectionReq) {
             throw new Error("no connection is present")
         }
+        // res.send(connectionReq)
         connectionReq.status = status
         await connectionReq.save()
         res.send("connection accepted successfully")
