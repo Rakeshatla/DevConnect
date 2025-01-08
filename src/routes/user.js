@@ -18,7 +18,7 @@ userRouter.get('/user/requests', userauth, async (req, res) => {
         }
 
         const data = await connections.map((row) => row.formUserId)
-        res.json({ message: "request are:", data })
+        res.json({ message: "request are:", connections })
 
     } catch (err) {
         res.status(404).send("Error " + err.message)
