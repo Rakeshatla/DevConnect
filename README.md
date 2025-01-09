@@ -25,5 +25,5 @@ MongoDB:
 **Installation Instructions**:\
 Include clear steps to set up and run the backend locally:\
 -Clone the repository.\
--Install dependencies using npm install or yarn.\
+-Install dependencies using npm install.\
 -Start the server using npm start.
