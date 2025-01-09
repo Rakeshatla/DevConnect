@@ -1,4 +1,4 @@
-**DevTinder:**
+# DevTinder Backend
 DevTinder is a platform designed to connect developers and help them build professional networks. It provides an interactive user experience, allowing developers to discover others, express interest, and manage connections efficiently.
 
 **Features**:\
@@ -7,7 +7,7 @@ Interest Button: \
 Connection Requests: \
 Connections View:
 
-**This is backend of my application**\
+**Backend Description**
 The backend of DevTinder is the backbone of the application, managing data, user authentication, and core business logic. It serves as the bridge between the frontend and the database, ensuring secure and efficient handling of user interactions and network-building features.
 
 **Key Responsibilities:**\
