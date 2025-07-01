@@ -19,10 +19,22 @@ authRouter.post('/signup', async (req, res) => {
         // if (data.skills.length > 10) {
         //     throw new Error("caan't be more than 10")
         // }
-        const saved = await user.save();
-        const token = await jwt.sign({ _id: user._id }, process.env.JWT_SECRET, { expiresIn: '1d' })
-        //cookies 
-        res.cookie('token', token)
+        const isProduction = process.env.NODE_ENV === "production";
+
+        const token = await jwt.sign(
+            { _id: user._id },
+            process.env.JWT_SECRET,
+            { expiresIn: "1d" }
+        );
+
+        res.cookie("token", token, {
+            httpOnly: true,
+            secure: isProduction,                      // HTTPS only in production
+            sameSite: isProduction ? "None" : "Lax",   // Allow cross-site cookies in production
+            expires: new Date(Date.now() + 24 * 60 * 60 * 1000), // 1 day
+        });
+
+
         res.send('sucessful');
     }
     catch (err) {
@@ -40,10 +52,23 @@ authRouter.post("/login", async (req, res) => {
         const isPasswordValid = await bcrypt.compare(password, user.password)
         if (isPasswordValid) {
             //jwt token
-            const token = await jwt.sign({ _id: user._id }, process.env.JWT_SECRET, { expiresIn: '1d' })
+            const isProduction = process.env.NODE_ENV === "production";
 
-            res.cookie('token', token)
-            res.send('sucessful')
+            const token = await jwt.sign(
+                { _id: user._id },
+                process.env.JWT_SECRET,
+                { expiresIn: "1d" }
+            );
+
+            res.cookie("token", token, {
+                httpOnly: true,
+                secure: isProduction,                      // HTTPS only in production
+                sameSite: isProduction ? "None" : "Lax",   // Allow cross-site cookies in production
+                expires: new Date(Date.now() + 24 * 60 * 60 * 1000), // 1 day
+            });
+
+            res.send("successful");
+
         } else {
             throw new Error("invalid credentials ")
         }
