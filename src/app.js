@@ -12,8 +12,8 @@ const cors = require('cors')
 app.use(
     cors({
         origin: [
-            "http://localhost:5173",
-            "https://devsphere-ui.onrender.com"
+            "https://devsphere-ui.onrender.com",
+            "http://localhost:5173"
         ],
         credentials: true,
     })
