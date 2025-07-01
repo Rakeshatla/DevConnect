@@ -19,11 +19,14 @@ app.use('/', userRouter)
 
 
 
-connectDB().then(() => {
-    console.log("sucessfully connected to database!!");
-    app.listen(5000, () => {
-        console.log("running on port 5000...")
+connectDB()
+    .then(() => {
+        console.log("Successfully connected to database!!");
+        const PORT = process.env.PORT || 5000;
+        app.listen(PORT, () => {
+            console.log(`Server running on port ${PORT}...`);
+        });
     })
-}).catch((err) => {
-    console.error("not connected to database");
-});
+    .catch((err) => {
+        console.error("Not connected to database");
+    });
