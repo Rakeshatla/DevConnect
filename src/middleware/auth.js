@@ -8,7 +8,7 @@ const userauth = async (req, res, next) => {
         if (!token) {
             throw new Error("token got expired ")
         }
-        const decoded = await jwt.verify(token, "DEVTINDER")
+        const decoded = await jwt.verify(token, process.env.JWT_SECRET)
         // console.log(decoded)
         const { _id } = decoded;
         const user = await User.findById(_id)

@@ -20,7 +20,7 @@ authRouter.post('/signup', async (req, res) => {
         //     throw new Error("caan't be more than 10")
         // }
         const saved = await user.save();
-        const token = await jwt.sign({ _id: user._id }, "DEVTINDER", { expiresIn: '1d' })
+        const token = await jwt.sign({ _id: user._id }, process.env.JWT_SECRET, { expiresIn: '1d' })
         //cookies 
         res.cookie('token', token)
         res.send('sucessful');
@@ -40,7 +40,7 @@ authRouter.post("/login", async (req, res) => {
         const isPasswordValid = await bcrypt.compare(password, user.password)
         if (isPasswordValid) {
             //jwt token
-            const token = await jwt.sign({ _id: user._id }, "DEVTINDER", { expiresIn: '1d' })
+            const token = await jwt.sign({ _id: user._id }, process.env.JWT_SECRET, { expiresIn: '1d' })
 
             res.cookie('token', token)
             res.send('sucessful')
