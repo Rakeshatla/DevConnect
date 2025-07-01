@@ -20,9 +20,9 @@ authRouter.post('/signup', async (req, res) => {
         //     throw new Error("caan't be more than 10")
         // }
         const saved = await user.save();
-        // const token = await jwt.sign({ _id: user._id }, "DEVTINDER", { expiresIn: '1d' })
-        // //cookies 
-        // res.cookie('token', token)
+        const token = await jwt.sign({ _id: user._id }, "DEVTINDER", { expiresIn: '1d' })
+        //cookies 
+        res.cookie('token', token)
         res.send('sucessful');
     }
     catch (err) {
