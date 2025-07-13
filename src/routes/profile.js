@@ -12,7 +12,19 @@ profileRouter.get("/profile/view", userauth, async (req, res) => {
         const user = req.user;
         res.send(user)
     } catch (err) {
-        res.status(401).send("invalid credentials  " + err.message)
+        res.status(404).send("invalid credentials  " + err.message)
+    }
+})
+profileRouter.get("/profile/view/:id", userauth, async (req, res) => {
+    try {
+        const id = req.params.id
+        const data = await User.findById(id)
+        if (!data) {
+            throw new Error("user not found")
+        }
+        res.send(data)
+    } catch (err) {
+        res.status(404).send("invalid credentials  " + err.message)
     }
 })
 

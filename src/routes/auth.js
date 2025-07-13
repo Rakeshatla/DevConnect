@@ -9,13 +9,13 @@ authRouter.post('/signup', async (req, res) => {
         //validation of api
         validateSignup(req);
         //hashing of password
-        const { firstName, lastName, email, password } = req.body;
+        const { firstName, lastName, email, password, developerType, availability, location, lookingFor } = req.body;
         const passwordhash = await bcrypt.hash(password, 10)
         // const data = req.body
         const user = new User({
-            firstName, lastName, email, password: passwordhash
+            firstName, lastName, email, password: passwordhash, developerType, availability, location, lookingFor
         });
-
+        await user.save();
         // if (data.skills.length > 10) {
         //     throw new Error("caan't be more than 10")
         // }

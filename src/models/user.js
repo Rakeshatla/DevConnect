@@ -38,7 +38,6 @@ const userSchema = mongoose.Schema({
     },
     about: {
         type: String,
-        default: "Rappa Rappa"
     }
     ,
     photoUrl: {
@@ -55,7 +54,45 @@ const userSchema = mongoose.Schema({
     },
     skills: {
         type: [String],
+    },
+    developerType: {
+        type: String,
+        enum: ["Frontend", "Backend", "Fullstack", "Mobile", "ML/AI", "DevOps", "UI/UX", "Data Scientist"],
+        required: true
+    },
+    availability: {
+        type: String,
+        enum: ["Weekdays", "Weekends", "Evenings", "Flexible"],
+        default: "Flexible"
+    },
+    location: {
+        type: String,
+        default: "Remote"
+    },
+    lookingFor: {
+        type: String,
+        enum: ["Project Collaboration", "Hackathon Team", "Startup Cofounder", "Mentorship"],
+        default: "Project Collaboration"
+    },
+    github: {
+        type: String,
+        validate: {
+            validator: function (v) {
+                return validator.isURL(v);
+            },
+            message: props => `${props.value} is not a valid URL!`
+        }
+    },
+    linkedin: {
+        type: String,
+        validate: {
+            validator: function (v) {
+                return validator.isURL(v);
+            },
+            message: props => `${props.value} is not a valid URL!`
+        }
     }
+
 }, {
     timestamps: true
 })

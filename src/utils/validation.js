@@ -1,6 +1,6 @@
 const validator = require('validator')
 const validateSignup = (req) => {
-    const { firstName, lastName, email, password } = req.body;
+    const { firstName, lastName, email, password, developerType, availability, location, lookingFor } = req.body;
     if (!firstName || !lastName) {
         throw new Error("plz enter name ");
     } else if (!validator.isEmail(email)) {
@@ -11,7 +11,7 @@ const validateSignup = (req) => {
 }
 
 const profileUpdate = (req) => {
-    const allowedfields = ["firstName", "lastName", "password", "skills", "age", "gender", "photoUrl", "about"];
+    const allowedfields = ["firstName", "lastName", "password", "skills", "age", "gender", "photoUrl", "about", "skills", "developerType", "availability", "location", "lookingFor"];
     const isallowed = Object.keys(req.body).every((field) =>
         allowedfields.includes(field)
     );
