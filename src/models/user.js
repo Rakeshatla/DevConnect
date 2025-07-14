@@ -58,7 +58,8 @@ const userSchema = mongoose.Schema({
     developerType: {
         type: String,
         enum: ["Frontend", "Backend", "Fullstack", "Mobile", "ML/AI", "DevOps", "UI/UX", "Data Scientist"],
-        required: true
+        default: "Frontend"
+
     },
     availability: {
         type: String,

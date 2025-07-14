@@ -9,11 +9,11 @@ authRouter.post('/signup', async (req, res) => {
         //validation of api
         validateSignup(req);
         //hashing of password
-        const { firstName, lastName, email, password, developerType, availability, location, lookingFor } = req.body;
+        const { firstName, lastName, email, password, skills, developerType, availability, location, lookingFor } = req.body;
         const passwordhash = await bcrypt.hash(password, 10)
         // const data = req.body
         const user = new User({
-            firstName, lastName, email, password: passwordhash, developerType, availability, location, lookingFor
+            firstName, lastName, email, password: passwordhash, skills, developerType, availability, location, lookingFor
         });
         await user.save();
         // if (data.skills.length > 10) {
@@ -35,7 +35,7 @@ authRouter.post('/signup', async (req, res) => {
         });
 
 
-        res.send('sucessful');
+        res.send(user);
     }
     catch (err) {
         res.status(404).send("Error " + err.message)
@@ -67,7 +67,7 @@ authRouter.post("/login", async (req, res) => {
                 expires: new Date(Date.now() + 24 * 60 * 60 * 1000), // 1 day
             });
 
-            res.send("successful");
+            res.send(user);
 
         } else {
             throw new Error("invalid credentials ")
