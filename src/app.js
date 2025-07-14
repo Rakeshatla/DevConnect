@@ -10,6 +10,7 @@ const profileRouter = require('./routes/profile')
 const requestRouter = require('./routes/request')
 const userRouter = require('./routes/user')
 const cors = require('cors')
+const http = require('http')
 app.use(
     cors({
         origin: [
@@ -26,13 +27,14 @@ app.use('/', profileRouter)
 app.use('/', requestRouter)
 app.use('/', userRouter)
 
-
+const server = http.createServer(app);
+const socket = require('socket.io');
 
 connectDB()
     .then(() => {
         console.log("Successfully connected to database!!");
         const PORT = process.env.PORT || 5000;
-        app.listen(PORT, () => {
+        server.listen(PORT, () => {
             console.log(`Server running on port ${PORT}...`);
         });
     })
