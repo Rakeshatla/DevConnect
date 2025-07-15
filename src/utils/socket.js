@@ -12,7 +12,7 @@ const getSecretRoomId = (userId, targetUserId) => {
 const initializeSocket = (server) => {
     const io = socket(server, {
         cors: {
-            origin: ["http://localhost:5173", "https://devsphere-ui.onrender.com"], credentials: true,
+            origin: ["http://localhost:5173", "https://devconnect-6j77.onrender.com"], credentials: true,
         },
     });
 

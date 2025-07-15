@@ -16,7 +16,7 @@ const chatRouter = require("./routes/chat");
 app.use(
     cors({
         origin: [
-            "https://devsphere-ui.onrender.com",
+            "https://devconnect-6j77.onrender.com",
             "http://localhost:5173"
         ],
         credentials: true,
