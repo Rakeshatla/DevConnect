@@ -7,7 +7,7 @@ const chatRouter = express.Router();
 chatRouter.get("/chat/:targetUserId", userauth, async (req, res) => {
     const { targetUserId } = req.params;
     const userId = req.user._id;
-    console.log(userId)
+    // console.log(userId)
     try {
         let chat = await Chat.findOne({
             participants: { $all: [userId, targetUserId] },
