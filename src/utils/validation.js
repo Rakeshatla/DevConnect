@@ -11,7 +11,7 @@ const validateSignup = (req) => {
 }
 
 const profileUpdate = (req) => {
-    const allowedfields = ["firstName", "lastName", "password", "skills", "age", "gender", "photoUrl", "about", "skills", "developerType", "availability", "location", "lookingFor"];
+    const allowedfields = ["firstName", "lastName", "password", "skills", "age", "gender", "photoUrl", "about", "skills", "developerType", "availability", "location", "lookingFor", "github", "linkedin"];
     const isallowed = Object.keys(req.body).every((field) =>
         allowedfields.includes(field)
     );

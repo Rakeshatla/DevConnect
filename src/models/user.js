@@ -82,7 +82,8 @@ const userSchema = mongoose.Schema({
                 return validator.isURL(v);
             },
             message: props => `${props.value} is not a valid URL!`
-        }
+        },
+        default: "github.com"
     },
     linkedin: {
         type: String,
@@ -91,7 +92,8 @@ const userSchema = mongoose.Schema({
                 return validator.isURL(v);
             },
             message: props => `${props.value} is not a valid URL!`
-        }
+        },
+        linkedin: "linkedin.com"
     }
 
 }, {

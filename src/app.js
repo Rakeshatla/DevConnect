@@ -10,7 +10,9 @@ const profileRouter = require('./routes/profile')
 const requestRouter = require('./routes/request')
 const userRouter = require('./routes/user')
 const cors = require('cors')
-const http = require('http')
+const http = require('http');
+const initializeSocket = require("./utils/socket");
+const chatRouter = require("./routes/chat");
 app.use(
     cors({
         origin: [
@@ -26,9 +28,10 @@ app.use('/', authRouter)
 app.use('/', profileRouter)
 app.use('/', requestRouter)
 app.use('/', userRouter)
+app.use('/', chatRouter)
 
 const server = http.createServer(app);
-const socket = require('socket.io');
+initializeSocket(server);
 
 connectDB()
     .then(() => {

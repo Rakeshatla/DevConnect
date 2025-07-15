@@ -4,7 +4,7 @@ const userauth = require('../middleware/auth');
 const ConnectionRequest = require('../models/ConnectionRequest');
 const User = require('../models/user');
 
-const DATA = ['firstName', 'lastName', 'age', 'gender', 'photoUrl']
+const DATA = ['firstName', 'lastName', 'age', 'gender', 'photoUrl', 'skills']
 
 userRouter.get('/user/requests', userauth, async (req, res) => {
     try {
@@ -80,6 +80,7 @@ userRouter.get('/user/feed', userauth, async (req, res) => {
                 _id: { $nin: Array.from(hideFromFeed) }
             }]
         }).select(DATA).skip(skip).limit(limit)
+
         res.send(feed)
     }
     catch (err) {
