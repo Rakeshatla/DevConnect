@@ -77,15 +77,16 @@ authRouter.post("/login", async (req, res) => {
     }
 })
 
-authRouter.post("/logout", async (req, res) => {
-    res.cookie('token', null, {
+authRouter.post("/logout", (req, res) => {
+    const isProduction = process.env.NODE_ENV === "production";
+    res.clearCookie("token", {
         httpOnly: true,
-        secure: isProduction,                      // HTTPS only in production
-        sameSite: isProduction ? "None" : "Lax",   // Allow cross-site cookies in production
-        expires: new Date(Date.now())
-    }
+        secure: isProduction,
+        sameSite: isProduction ? "None" : "Lax",
+        path: "/",  // matches default from login
+        // domain: ".yourdomain.com" // include if you set it at login
+    });
+    res.send("logout successful");
+});
 
-    )
-    res.send("logut successfull")
-})
 module.exports = authRouter;
