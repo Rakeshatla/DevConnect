@@ -46,11 +46,11 @@ const userSchema = mongoose.Schema({
     },
     gender: {
         type: String,
-        validate(value) {
-            if (!["male", "female", "others"].includes(value)) {
-                throw new error("plz check the gender");
-            }
-        }
+        // validate(value) {
+        //     if (!["male", "female", "others", "Male", "Female"].includes(value)) {
+        //         throw new error("plz check the gender");
+        //     }
+        // }
     },
     skills: {
         type: [String],
@@ -82,7 +82,7 @@ const userSchema = mongoose.Schema({
         //         return validator.isURL(v);
         //     },
         //     message: props => `${props.value} is not a valid URL!`
-        // },
+        // }
         default: "github.com"
     },
     linkedin: {
