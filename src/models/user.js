@@ -77,22 +77,22 @@ const userSchema = mongoose.Schema({
     },
     github: {
         type: String,
-        validate: {
-            validator: function (v) {
-                return validator.isURL(v);
-            },
-            message: props => `${props.value} is not a valid URL!`
-        },
+        // validate: {
+        //     validator: function (v) {
+        //         return validator.isURL(v);
+        //     },
+        //     message: props => `${props.value} is not a valid URL!`
+        // },
         default: "github.com"
     },
     linkedin: {
         type: String,
-        validate: {
-            validator: function (v) {
-                return validator.isURL(v);
-            },
-            message: props => `${props.value} is not a valid URL!`
-        },
+        // validate: {
+        //     validator: function (v) {
+        //         return validator.isURL(v);
+        //     },
+        //     message: props => `${props.value} is not a valid URL!`
+        // },
         linkedin: "linkedin.com"
     }
 
